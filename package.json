@@ -1,0 +1,30 @@
+{
+  "name": "lisp-repl",
+  "version": "0.0.1",
+  "description": "An experimental lisp repl.",
+  "main": "repl.js",
+  "private": true,
+  "scripts": {
+    "start": "node repl",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/animatedlew/lisprepl.git"
+  },
+  "keywords": [
+    "interpreter",
+    "lisp",
+    "repl",
+    "parser",
+    "lexer",
+    "node",
+    "es6"
+  ],
+  "author": "Lewis Moronta",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/animatedlew/lisprepl/issues"
+  },
+  "homepage": "https://github.com/animatedlew/lisprepl#readme"
+}
