@@ -1,7 +1,7 @@
-####What is it?
+###What is it?
 An experimental lisp repl.
 
-####Features
+###Features
  * Nested lists
  * Support for many global roots
  * Atoms
@@ -11,5 +11,10 @@ An experimental lisp repl.
    - single quoted strings
    - double quoted strings
 
-####What does it do?
-At the moment, it simply tokenizes your input and generates an AST. In a future version, I will be adding basic functions such as: +, -, /, *, %, min, max, head, tail. In addition, I will be adding variables.
+###What does it do?
+At the moment, it simply tokenizes your input and generates an AST. In a future version, I will be adding basic functions such as: +, -, /, *, %, min, max, head, and tail.
+
+###TODO
+ * functions
+ * variables
+ * contexts
