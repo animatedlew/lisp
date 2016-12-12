@@ -15,6 +15,8 @@ Type `npm start` or `node repl` on the command line.
  * Support for many global roots
  * Atoms
    - symbols
+   - bools
+   - lists
    - integers
    - real numbers
    - keywords
@@ -35,11 +37,19 @@ To use an `if-expr`, use the following syntax rules:
 ```
 The interpreter will complain if you do not provide enough, or too many, branches. The `cond` term can be any nested `s-expression` that evaluates to a `bool`.
 
+To use `print-expr`, use the following rules:
+
+```lisp
+(print 1)
+```
+The `print` function can also handle multiple arguments and the empty list.
+
 ###TODO
  * add [JSON](http://www.json.org/) string escape chars
  * add the concept of nil == ()
  * variables
  * contexts
+ * distinguish names from symbols
  * add quote, quasiquote, and unquote
  * implement `cons` to make lists truly `sexprs`
   - e.g. `(eq (cons x y) (list x y)) ; (x . y)`
