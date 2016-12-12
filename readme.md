@@ -11,7 +11,6 @@ Type `npm start` or `node repl` on the command line.
 
 ###Features
  * All [sexprs](https://en.wikipedia.org/wiki/S-expression) return a value
- * Nested lists
  * Support for many global roots
  * Atoms
    - symbols
@@ -43,6 +42,24 @@ To use `print-expr`, use the following rules:
 (print 1)
 ```
 The `print` function can also handle multiple arguments and the empty list.
+
+###Examples
+```lisp
+(if (eq 3 3)
+    (print 'ok')
+    (print ()))
+; ok
+```
+
+```lisp
+(list 1 2 3 4)
+; (1 2 3 4)
+```
+
+```lisp
+(div (sub 4 (mult 2 (neg 8))) 2)
+; 10
+```
 
 ###TODO
  * add [JSON](http://www.json.org/) string escape chars
