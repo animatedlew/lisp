@@ -119,8 +119,14 @@ module.exports = {
     },
     print: {
         block: args => {
-            if (args instanceof String) console.log(">> " + colors.yellow(args));
-            else if (Array.isArray(args)) console.log(">> " + args.map(t => t.lexeme).join(", "));
+            let argc = args.length;
+            if (argc > 1) console.log(`>>  ${'(' + colors.yellow(args.map(t => t.lexeme).join(' ')) + ')'}`);
+            else if (argc == 1) {
+                if (Array.isArray(args[0]) && !args[0].length) {
+                    console.log(`>> ${colors.yellow('()')}`);
+                } else console.log(`>> ${colors.yellow(args[0].lexeme)}`);
+            }
+            return new Token('list', []);
         }
     }
 };

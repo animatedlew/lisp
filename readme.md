@@ -40,7 +40,7 @@ The interpreter will complain if you do not provide enough, or too many, branche
  * add the concept of nil == ()
  * variables
  * contexts
- * add quote and unquote
+ * add quote, quasiquote, and unquote
  * implement `cons` to make lists truly `sexprs`
   - e.g. `(eq (cons x y) (list x y)) ; (x . y)`
   - instead of `car` and `cdr`, use `head` and `tail`
@@ -50,5 +50,7 @@ The interpreter will complain if you do not provide enough, or too many, branche
  * add `;` comments
  * custom functions
  * accept internal symbols `/\+|\-|\/|\*|\%|\!/`
+ * add ability to read in a source file
+ * ~~add list keyword~~
  * ~~functions~~
  * ~~keywords~~
