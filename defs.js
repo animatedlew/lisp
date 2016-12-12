@@ -1,6 +1,6 @@
 const colors = require('./colors');
 const interpret = require('./interpreter');
-const Token = require('./Token');
+const Token = require('./token');
 
 module.exports = {
     add: {

@@ -1,4 +1,4 @@
-const Token = require('./Token');
+const Token = require('./token');
 
 module.exports = function interpret(ast) {
     const keywords = require('./keywords');
