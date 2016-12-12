@@ -48,5 +48,7 @@ The interpreter will complain if you do not provide enough, or too many, branche
   - for hex numbers like `#xF2D5`
   - for binary numbers like `#b101001010`
  * add `;` comments
+ * custom functions
+ * accept internal symbols `/\+|\-|\/|\*|\%|\!/`
  * ~~functions~~
  * ~~keywords~~
