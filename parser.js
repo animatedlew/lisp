@@ -19,8 +19,11 @@ class Parser {
     while (this.t.length) {
       let token = this.getCurrentToken();
       switch (token.type) {
+        case 'function':
+        case 'keyword':
         case 'symbol':
         case 'number':
+        case 'bool':
         case 'string':
           ast.push(this.consume());
           break;

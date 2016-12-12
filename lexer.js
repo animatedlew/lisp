@@ -1,14 +1,17 @@
 const colors = require('./colors');
 const Token = require('./token.js');
+const keywords = require('./keywords');
+const defs = require('./defs');
 
 class Lexer {
-    constructor(input) {
+    constructor(input, showTokens) {
         this.t = [];
         this.row = 0;
         this.col = 0;
         this.p = 0;
         this.input = input.split('');
         this.ast = [];
+        this.showTokens = showTokens || false;
     }
     match(char) {
         if (char == this.input[this.p]) { this.p++; this.col++; }
@@ -23,7 +26,15 @@ class Lexer {
             c = this.input[++this.p];
         }
         this.space();
-        if (buffer) this.t.push(new Token('symbol', buffer));
+        if (buffer) {
+            let type = keywords[buffer] ? 'keyword' : 'symbol';
+            if (type == 'symbol' && defs[buffer]) type = 'function';
+            else if (/true|false/.test(buffer)) {
+                type = 'bool';
+                buffer = buffer == 'true' ? true : false;
+            }
+            this.t.push(new Token(type, buffer));
+        }
         return buffer;
     }
     string(quote) {
@@ -81,7 +92,7 @@ class Lexer {
             }
             this.space();
         }
-        if (this.t.length) {
+        if (this.showTokens && this.t.length) {
             let tokenList = this.t.map(t => `  ${t.type}: ${t.lexeme}`).join('\n');
             console.log(colors.bold(`\n   token\n  -=-=-=-\n${tokenList}\n`));
         }
