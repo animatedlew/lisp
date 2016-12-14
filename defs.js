@@ -119,12 +119,14 @@ module.exports = {
     },
     print: {
         block: args => {
+            const keywords = require('./keywords'); // TODO: move this out of here
             let argc = args.length;
             if (argc > 1) console.log(`>>  ${'(' + colors.yellow(args.map(t => t.lexeme).join(' ')) + ')'}`);
             else if (argc == 1) {
-                if (Array.isArray(args[0]) && !args[0].length) {
-                    console.log(`>> ${colors.yellow('()')}`);
-                } else console.log(`>> ${colors.yellow(args[0].lexeme)}`);
+                let lookup = keywords.global ? keywords.global(args[0].lexeme) : undefined;
+                if (Array.isArray(args[0]) && !args[0].length) console.log(`>> ${colors.yellow('()')}`);
+                else if (args[0].type == 'symbol' && lookup) console.log(`>> ${colors.yellow(lookup.lexeme)}`)  
+                else console.log(`>> ${colors.yellow(args[0].lexeme)}`);
             }
             return new Token('list', []);
         }

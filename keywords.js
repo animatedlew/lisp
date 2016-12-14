@@ -4,8 +4,8 @@ const defs = require('./defs');
 const assert = require('assert');
 
 let globals = {};
-
-module.exports = {
+let keywords = {
+    // TODO: move this out of here
     global(key) {
       return globals[key];
     },
@@ -32,7 +32,8 @@ module.exports = {
         assert(argc == 2 && name.type == 'symbol', 'Incorrect number of args for def-expr. Form: (def symbol value)');
         if (rhs.type == 'symbol' && globals[rhs.lexeme]) globals[name.lexeme] = globals[rhs.lexeme];
         else if (Array.isArray(rhs)) globals[name.lexeme] = interpret(rhs);
-        else globals[name.lexeme] = rhs;
+        else if (rhs.type != 'symbol') globals[name.lexeme] = rhs;
+        else throw new Error("Cannot store undefined symbol.");
         return globals[name.lexeme];
       }
     },
@@ -47,5 +48,11 @@ module.exports = {
     },
     false: {
         block: () => false
+    },
+    g: { // debug
+        block: () => console.log(globals)
     }
 };
+
+console.log("importing: ", keywords);
+module.exports = keywords;

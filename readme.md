@@ -45,6 +45,16 @@ The `print` function can also handle multiple arguments and the empty list.
 
 ###Examples
 ```lisp
+(def x (add 40 2))
+(def y 15)
+(print x)
+(def x y)
+(print x)
+
+
+```
+
+```lisp
 (if (eq 3 3)
     (print 'ok')
     (print ()))

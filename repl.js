@@ -49,7 +49,7 @@ class Repl {
   }
   static print(result) {
     if (Array.isArray(result))
-      console.log(`>> ${result.map(t => colors.yellow(t.lexeme))}`);
+      console.log(`>> ${result.map(t => colors.yellow(t.lexeme || '()'))}`);
     else if (result instanceof Token) {
       switch (result.type) {
         case "list":
