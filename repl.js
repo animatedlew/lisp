@@ -7,7 +7,7 @@ const Token = require('./token');
 
 class Repl {
   constructor() {
-    let input = "(if (eq 2 2) (print 'ok') (print ()))";
+    let input = "(def x (if (lt 2 3) (print 'ok') (print ())))";
     console.log("An experimental lisp repl\nLewis Moronta \u00A9 2016\n");
     console.log(colors.green(`repl> ${input}`));
     let result = this.eval(input, { show: { tokens: true, ast: true } });
@@ -78,4 +78,3 @@ class Repl {
 const nodeVersion = +process.version.match(/^v(\d+)\.(.*)/)[1];
 if (nodeVersion < 6) console.error("This app requires Node v6 or greater to run.");
 else new Repl();
-

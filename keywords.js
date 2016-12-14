@@ -3,15 +3,19 @@ const interpret = require('./interpreter');
 const defs = require('./defs');
 const assert = require('assert');
 
+let globals = {};
+
 module.exports = {
+    global(key) {
+      return globals[key];
+    },
     if: {
         block(args) {
             let argc = args.length;
             assert(argc == 3, 'Incorrect number of args for if-expr. Form: (if cond if-true if-false)');
             let [cond, ifTrue, ifFalse] = args;
-            return interpret(cond).lexeme ? interpret(args[1]) : interpret(args[2]);
-        }, 
-        rules: []
+            return interpret([cond]).lexeme ? interpret(args[1]) : interpret(args[2]);
+        }
     },
     list: {
         block(args) {
@@ -22,21 +26,26 @@ module.exports = {
         }
     },
     def: {
-        rules: []
+      block(args) {
+        let argc = args.length;
+        let [name, rhs] = args;
+        assert(argc == 2 && name.type == 'symbol', 'Incorrect number of args for def-expr. Form: (def symbol value)');
+        if (rhs.type == 'symbol' && globals[rhs.lexeme]) globals[name.lexeme] = globals[rhs.lexeme];
+        else if (Array.isArray(rhs)) globals[name.lexeme] = interpret(rhs);
+        else globals[name.lexeme] = rhs;
+        return globals[name.lexeme];
+      }
     },
     fn: {
-        rules: []
+      // TODO: this will almost behave like quasiquote/unquote but with arg bindings, will need to return a function
     },
     let: {
-        block: (fn, k, v) => defs[fn].ctx[k] = v,
-        rules: []
+        block: (fn, k, v) => defs[fn].ctx[k] = v
     },
     true: {
-        block: () => true,
-        rules: []
+        block: () => true
     },
     false: {
-        block: () => false,
-        rules: []
+        block: () => false
     }
 };

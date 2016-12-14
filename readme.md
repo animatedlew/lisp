@@ -65,7 +65,13 @@ The `print` function can also handle multiple arguments and the empty list.
  * add [JSON](http://www.json.org/) string escape chars
  * add the concept of nil == ()
  * variables
+  - (let (x 5) (y 2)) ; local ctx
+  - ~~(def x 5) ; global ctx~~
+  - ~~add def lookup in interpreter~~
+ * custom functions
  * contexts
+  - local
+  - ~~global~~
  * distinguish names from symbols
  * add quote, quasiquote, and unquote
  * implement `cons` to make lists truly `sexprs`
@@ -75,8 +81,7 @@ The `print` function can also handle multiple arguments and the empty list.
   - for hex numbers like `#xF2D5`
   - for binary numbers like `#b101001010`
  * add `;` comments
- * custom functions
- * accept internal symbols `/\+|\-|\/|\*|\%|\!/`
+ * accept internal symbols `/\+|\-|\/|\*|\%|\!|\:/`
  * add ability to read in a source file
  * ~~add list keyword~~
  * ~~functions~~

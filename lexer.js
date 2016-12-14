@@ -86,7 +86,7 @@ class Lexer {
                     break;
                 default:
                     if (this.isNumber(c) || this.isNumberPrefix(c)) this.digits();
-                    else if (this.isLetter(c)) this.symbol();
+                    else if (this.isLetter(c)) this.symbol(); // TODO: break this up into identifiers and symbols
                     else throw new Error(`Try again. Character '${c}' is illegal.`);
                     break;
             }
