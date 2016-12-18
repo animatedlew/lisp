@@ -18,7 +18,7 @@ Type `npm start` or `node repl` on the command line.
    - lists
    - integers
    - real numbers
-   - keywords
+   - forms
    - functions
    - single quoted strings
    - double quoted strings
@@ -45,13 +45,17 @@ The `print` function can also handle multiple arguments and the empty list.
 
 ###Examples
 ```lisp
+(def sum (fn (a b)
+         (add a b)))
+```
+
+```lisp
 (def x (add 40 2))
 (def y 15)
 (print x)
 (def x y)
 (print x)
-
-
+; 15
 ```
 
 ```lisp
@@ -72,21 +76,39 @@ The `print` function can also handle multiple arguments and the empty list.
 ```
 
 ###TODO
+ * unit tests
+ * eval
+ * apply
+ * append
+ * len
+ * map
+ * filter
+ * min
+ * max
+ * floor
+ * ceil
+ * symbol?
+    - function?
+    - equality?
+    - nil?
+    - empty?
+    - number?
+    - string?
+    - list?
  * add [JSON](http://www.json.org/) string escape chars
  * add the concept of nil == ()
  * variables
   - (let (x 5) (y 2)) ; local ctx
   - ~~(def x 5) ; global ctx~~
   - ~~add def lookup in interpreter~~
- * custom functions
- * contexts
-  - local
+ * ~~custom functions~~
+ * ~~contexts~~
+  - ~~local~~
   - ~~global~~
- * distinguish names from symbols
  * add quote, quasiquote, and unquote
  * implement `cons` to make lists truly `sexprs`
-  - e.g. `(eq (cons x y) (list x y)) ; (x . y)`
-  - instead of `car` and `cdr`, use `head` and `tail`
+  - e.g. `(eq (cons x '(y)) (list x y)) ; (x . y)`
+  - ~~instead of `car` and `cdr`, use `head` and `tail`~~
  * add language extensions with `#`
   - for hex numbers like `#xF2D5`
   - for binary numbers like `#b101001010`
@@ -94,5 +116,14 @@ The `print` function can also handle multiple arguments and the empty list.
  * accept internal symbols `/\+|\-|\/|\*|\%|\!|\:/`
  * add ability to read in a source file
  * ~~add list keyword~~
- * ~~functions~~
- * ~~keywords~~
+ * ~~predefs~~
+ * ~~forms~~
+
+ ####Forms
+ - vars on scope chain: `foo` -> `value`
+ - atoms eval to themselves
+ - if-forms: `(if cond isTrue isFalse)`
+ - definition: `(def foo 42)`
+ - function application: `(sum x y)`
+ - functions: `(fn params body)`
+

@@ -1,30 +1,52 @@
 const Token = require('./token');
+const Context = require('./Context');
+const assert = require('assert');
 
-module.exports = function interpret(ast) {
+module.exports = function interpret(ast, ctx) {
 
-    // FIXME: move these out of here!
-    const defs = require('./defs');
-    const keywords = require('./keywords');
+    assert(ctx, '#interpret: Missing scope!');
 
-    let block = () => null;
-    let trueToken = new Token("bool", true);
-    let falseToken = new Token("bool", false);
+    const predefs = require('./predefs');
+    const forms = require('./forms');
 
-    switch(ast[0].type) {
-        case 'bool':
-            return ast[0];
-        case "keyword":
-            block = keywords[ast[0].lexeme].block;
-            return block(ast.slice(1)) || falseToken;
-        case "function":
-            block = defs[ast[0].lexeme].block;
-            return block(ast.slice(1)) || falseToken;
-        case "symbol":
-            let lookup = keywords.global(ast[0].lexeme);
-            return lookup ? ast[0] = lookup : ast[0];
-        default:
-            if (Array.isArray(ast[0]))
-                return ast[0].length ? interpret(ast[0]) : falseToken;
-            return ast[0];
-    }
+    // const trueToken = new Token("bool", true);
+    // const falseToken = new Token("bool", false);
+
+    for (let i = 0; i < ast.length; i++) {
+        let atom = ast[i];
+        if (i == 0) {
+            if (Array.isArray(atom))
+                return interpret(atom, ctx);
+            else {
+                switch (atom.type) {
+                    case "form": {
+                        console.log("FORM: " + atom.lexeme);
+                        let block = forms[atom.lexeme];
+                        return block(ast.slice(1), ctx);
+                    }
+                    case "function": {
+                        console.log("FUNCTION");
+                        let predef = predefs[atom.lexeme];
+                        // either a  predef or fn
+                        if (predef) 
+                            return predef(ast.slice(1), ctx);
+                        else {
+                            let fn = atom.lexeme;
+                            return fn.block.call(fn, ast.slice(1), ctx);
+                        }
+                        break;
+                    }
+                    case 'symbol':
+                        let lookup = ctx.find(atom.lexeme);
+                        if (lookup && lookup.type == 'function') {
+                            return interpret([lookup].concat(ast.slice(1)), ctx);
+                        } 
+                        return lookup || atom;
+                    default:
+                        console.log(`${atom.type.toUpperCase()}: ${atom.lexeme}`);
+                        return atom;
+                }
+            }
+        }
+    };
 }

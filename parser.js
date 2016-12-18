@@ -20,7 +20,7 @@ class Parser {
       let token = this.getCurrentToken();
       switch (token.type) {
         case 'function':
-        case 'keyword':
+        case 'form':
         case 'symbol':
         case 'number':
         case 'bool':

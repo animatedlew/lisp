@@ -1,7 +1,7 @@
 const colors = require('./colors');
 const Token = require('./token.js');
-const keywords = require('./keywords');
-const defs = require('./defs');
+const forms = require('./forms');
+const predefs = require('./predefs');
 
 class Lexer {
     constructor(input, showTokens) {
@@ -27,8 +27,8 @@ class Lexer {
         }
         this.space();
         if (buffer) {
-            let type = keywords[buffer] ? 'keyword' : 'symbol';
-            if (type == 'symbol' && defs[buffer]) type = 'function';
+            let type = forms[buffer] ? 'form' : 'symbol';
+            if (type == 'symbol' && predefs[buffer]) type = 'function';
             else if (/true|false/.test(buffer)) {
                 type = 'bool';
                 buffer = buffer == 'true' ? true : false;
@@ -86,7 +86,7 @@ class Lexer {
                     break;
                 default:
                     if (this.isNumber(c) || this.isNumberPrefix(c)) this.digits();
-                    else if (this.isLetter(c)) this.symbol(); // TODO: break this up into identifiers and symbols
+                    else if (this.isLetter(c)) this.symbol();
                     else throw new Error(`Try again. Character '${c}' is illegal.`);
                     break;
             }
