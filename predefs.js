@@ -6,13 +6,13 @@ const assert = require('assert');
 module.exports = {
     add(args, ctx) {
         let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
-        console.log("args:", a, b);
+        console.log('args:', a, b);
         assert(a.type == 'number' && b.type == 'number', '#add: arguments must evaluate to numbers!');
-        return new Token("number", a.lexeme + b.lexeme);
+        return new Token('number', a.lexeme + b.lexeme);
     },
     sub(args, ctx) {
         let [a, b] = [args[0], args[1]];
-        return new Token("number", +interpret([a], ctx).lexeme - +interpret([b], ctx).lexeme);
+        return new Token('number', +interpret([a], ctx).lexeme - +interpret([b], ctx).lexeme);
     },
     mod(args, ctx) {
         let [a, b] = [args[0], args[1]];
@@ -79,18 +79,17 @@ module.exports = {
     max: (a, b) => a >= b ? a : b,
     floor: n => n[0] | 0,
     ceil: n => n[0] | 0 + 1,
-    print: {
-        block: (args, ctx) => {
-            let argc = args.length;
-            if (argc > 1) console.log(`>>  ${'(' + colors.yellow(args.map(t => t.lexeme).join(' ')) + ')'}`);
-            else if (argc == 1) {
-                let lookup = ctx.find(args[0].lexeme).lexeme;
-                if (Array.isArray(args[0]) && !args[0].length) console.log(`>> ${colors.yellow('()')}`);
-                else if (args[0].type == 'symbol' && lookup) console.log(`>> ${colors.yellow(lookup)}`);
-                else if (args[0].type == 'function') console.log(`>> ${colors.yellow('function')}`);
-                else console.log(`>> ${colors.yellow(args[0].lexeme)}`);
-            }
-            return new Token('list', []);
+    print(args, ctx) {
+        let argc = args.length;
+        if (argc > 1) console.log(`>>  ${'(' + colors.yellow(args.map(t => t.lexeme).join(' ')) + ')'}`);
+        else if (argc == 1) {
+            let lookup = ctx.find(args[0].lexeme).lexeme;
+            if (Array.isArray(args[0]) && !args[0].length) console.log(`>> ${colors.yellow('()')}`);
+            else if (args[0].type == 'symbol' && lookup) console.log(`>> ${colors.yellow(lookup)}`);
+            else if (args[0].type == 'function') console.log(`>> ${colors.yellow('function')}`);
+            else if (args[0].type == 'list') console.log(`>> ${colors.yellow(args[0].lexeme.map(t => t.lexeme).join(', '))}`);
+            else console.log(`>> ${colors.yellow(args[0].lexeme)}`);
         }
+        return new Token('list', []);
     }
 };

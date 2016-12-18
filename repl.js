@@ -16,25 +16,18 @@ class Repl {
     // let input = '(if false (def x 42) (def y 10))';
     // let input = '(def x (if (lt 2 3) (print \'ok\') (print ())))';
     // let input = '((fn (n) (print n)) 42)';
-    // let input = '(def sum (fn (a b) (add a b)))';
+    let input = '(def sum (fn (a b) (add a b))) (print (sum 5 10))';
+    // let input = '(print (list 1 2 3))';
     // let input = '(head (list 42 2 1))';
-    let input = '(head (tail (list 5 4 3 2 1)))';
+    // let input = '(head (tail (list 5 4 3 2 1)))';
+    // let input = '(def x 2)(def y 3)(print (add x y))';
     // let input = '(def x 2)';
     // let input = '((fn (x y) (add x y)) 5 8))';
     console.log(colors.white("An experimental lisp repl\nLewis Moronta \u00A9 2016\n"));
     console.log(colors.green(`repl> ${input}`));
     let result = this.eval(input, { show: { tokens: true, ast: true } });
     Repl.print(result);
-    console.log("scope: ", scope);
     console.log("\nCtrl/Cmd-C to quit.");
-
-    this.eval("(def x 2)");
-    this.eval("(def y 10)");
-
-    result = this.eval("(def result (sum x y))");
-    console.log('result: ', result);
-    console.log('scope: ', scope);
-
     this.repl();
   }
   repl() {
@@ -63,7 +56,7 @@ class Repl {
       let parser = new Parser(lex.tokens);
       let ast = parser.ast;
       if (opts.show.ast) Repl.pprint(ast);
-      return interpret(ast, scope);
+      return ast.map(atom => interpret([atom], scope));
     } catch (e) {
       console.error(e.message);
       return [];
@@ -71,11 +64,11 @@ class Repl {
   }
   static print(result) {
     if (Array.isArray(result))
-      console.log(`>> ${result.map(t => colors.yellow(t.lexeme || '()'))}`);
+      console.log(`>> (${result.map(t => colors.yellow(t.lexeme.length ? t.lexeme : 'nil')).join(' ')})`);
     else if (result instanceof Token) {
       switch (result.type) {
         case 'list':
-          console.log(`>> ${colors.yellow('(' + result.lexeme.map(t => t.lexeme).join(' ') + ')')}`);
+          console.log(`>> ${colors.yellow(`(${result.lexeme.map(t => t.lexeme).join(' ')})`)}`);
           break;
         case 'function':
           console.log(`>> ${colors.yellow('function')}`);

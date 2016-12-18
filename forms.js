@@ -9,7 +9,8 @@ let forms = {
     fn(args, ctx) {
         let argc = args.length;
         assert(argc == 2, 'Incorrect number of args for fn-expr. Form: (fn (args) body)');
-        return new Token('function', new Fn(ctx, new Token('list', args[0]), new Token('quote', args[1])));
+        let [params, body] = args;
+        return new Token('function', new Fn(ctx, new Token('list', params), new Token('quote', body)));
     },
     if(args, ctx) {
         let argc = args.length;
