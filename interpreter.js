@@ -9,9 +9,6 @@ module.exports = function interpret(ast, ctx) {
     const predefs = require('./predefs');
     const forms = require('./forms');
 
-    // const trueToken = new Token("bool", true);
-    // const falseToken = new Token("bool", false);
-
     for (let i = 0; i < ast.length; i++) {
         let atom = ast[i];
         if (i == 0) {
