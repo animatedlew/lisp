@@ -6,7 +6,6 @@ const assert = require('assert');
 module.exports = {
     add(args, ctx) {
         let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
-        console.log('args:', a, b);
         assert(a.type == 'number' && b.type == 'number', '#add: arguments must evaluate to numbers!');
         return new Token('number', a.lexeme + b.lexeme);
     },

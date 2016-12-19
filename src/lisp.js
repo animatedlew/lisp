@@ -8,27 +8,10 @@ const Context = require('./context');
 
 const scope = new Context({ version: new Token('string', '1.0') });
 
-class Repl {
+class Lisp {
   constructor() {
-    // TODO: upgrade these unit tests to mocha tests
-    // let input = 'add 2 3';
-    // let input = `(def x 2) (def y 3) (print (add x y))`;
-    // let input = '(if false (def x 42) (def y 10))';
-    // let input = '(def x (if (lt 2 3) (print \'ok\') (print ())))';
-    // let input = '((fn (n) (print n)) 42)';
-    let input = '(def sum (fn (a b) (add a b))) (print (sum 5 10))';
-    // let input = '(print (list 1 2 3))';
-    // let input = '(head (list 42 2 1))';
-    // let input = '(head (tail (list 5 4 3 2 1)))';
-    // let input = '(def x 2)(def y 3)(print (add x y))';
-    // let input = '(def x 2)';
-    // let input = '((fn (x y) (add x y)) 5 8))';
-    console.log(colors.white("An experimental lisp repl\nLewis Moronta \u00A9 2016\n"));
-    console.log(colors.green(`repl> ${input}`));
-    let result = this.eval(input, { show: { tokens: true, ast: true } });
-    Repl.print(result);
-    console.log("\nCtrl/Cmd-C to quit.");
-    this.repl();
+    console.log(colors.white("An experimental lisp\nLewis Moronta \u00A9 2016\n"));
+    console.log("Ctrl/Cmd-C to quit.");
   }
   repl() {
     const rl = readline.createInterface({
@@ -41,7 +24,7 @@ class Repl {
       try {
         let input = line.trim();                         // read
         let result = this.eval(input);                   // eval
-        Repl.print(result);                              // print
+        Lisp.print(result);                              // print
       } catch (e) {
         console.error(colors.red(e.message));
       }
@@ -55,7 +38,7 @@ class Repl {
       let lex = new Lexer(input, opts.show.tokens);
       let parser = new Parser(lex.tokens);
       let ast = parser.ast;
-      if (opts.show.ast) Repl.pprint(ast);
+      if (opts.show.ast) Lisp.pprint(ast);
       return ast.map(atom => interpret([atom], scope));
     } catch (e) {
       console.error(e.message);
@@ -93,6 +76,4 @@ class Repl {
   }
 }
 
-const nodeVersion = +process.version.match(/^v(\d+)\.(.*)/)[1];
-if (nodeVersion < 6) console.error("This app requires Node v6 or greater to run.");
-else new Repl();
+module.exports = Lisp;

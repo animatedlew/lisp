@@ -17,12 +17,12 @@ module.exports = function interpret(ast, ctx) {
             case "list":
                 return ast;
             case "form": {
-                console.log("FORM: " + atom.lexeme);
+                //console.log("FORM: " + atom.lexeme);
                 let block = forms[atom.lexeme];
                 return block(ast.slice(1), ctx);
             }
             case "function": {
-                console.log("FUNCTION");
+                //console.log("FUNCTION");
                 let predef = predefs[atom.lexeme];
                 // either a  predef or fn
                 if (predef) {
@@ -40,7 +40,7 @@ module.exports = function interpret(ast, ctx) {
                 }
                 return lookup || atom;
             default:
-                console.log(`${atom.type.toUpperCase()}: ${atom.lexeme}`);
+                //console.log(`${atom.type.toUpperCase()}: ${atom.lexeme}`);
                 return atom;
         }
     };

@@ -18,7 +18,7 @@ class Fn {
     block(args, _) {
         let argc = args.length;
         let requiredArgc = this.params.lexeme.length;
-        console.log("args", '(' + args.map(t => t.lexeme).join(', ') + ')');
+        //console.log("args", '(' + args.map(t => t.lexeme).join(', ') + ')');
         assert(argc == requiredArgc, `Arity error! Please provide ${requiredArgc} argument${requiredArgc != 1 ? 's' : ''}.`);
         this.bind(args);
         return interpret(this.body.lexeme, this.ctx);
