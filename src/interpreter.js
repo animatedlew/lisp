@@ -19,16 +19,15 @@ module.exports = function interpret(ast, ctx) {
             case "form": {
                 //console.log("FORM: " + atom.lexeme);
                 let block = forms[atom.lexeme];
-                return block(ast.slice(1), ctx);
+                let result = block(ast.slice(1), ctx);
+                return result;
             }
             case "function": {
                 //console.log("FUNCTION");
                 let predef = predefs[atom.lexeme];
-                // either a  predef or fn
-                if (predef) {
-                    let args = ast.slice(1).map(arg => interpret([arg], ctx));
-                    return predef(args, ctx);
-                } else {
+                // either a predef or fn
+                if (predef) return predef(ast.slice(1), ctx);
+                else {
                     let fn = atom.lexeme;
                     return fn.block.call(fn, ast.slice(1), ctx);
                 }

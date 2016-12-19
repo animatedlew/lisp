@@ -2,6 +2,7 @@ const expect = require('chai').expect;
 const Lisp = require('../src/lisp');
 const Token = require('../src/token');
 
+global.NOPRINT = true;
 const lisp = new Lisp();
 
 describe('Lisp', () => {
@@ -9,6 +10,14 @@ describe('Lisp', () => {
         it('(add 2 3)', () => {
             let result = lisp.eval('(add 2 3)')[0];
             expect(result).to.have.deep.eq(new Token('number', 5));
+        });
+        xit('((fn (n) (print n)) 42)', () => {
+            let result = lisp.eval('((fn (n) (print n)) 42)')[0];
+            expect(result).to.have.property('type', 'list');
+        });
+        xit('((fn (x y) (add x y)) 5 8))', () => {
+            let result = lisp.eval('((fn (x y) (add x y)) 5 8))')[0];
+            expect(result).to.have.property('lexeme', 13);
         });
         it('(def x 2) (def y 3) (print (add x y))', () => {
             let result = lisp.eval('(def x 2) (def y 3) (print (add x y)) (add x y)')[3];
@@ -30,21 +39,13 @@ describe('Lisp', () => {
             let result = lisp.eval('(print (list 1 2 3))')[0];
             expect(result).to.have.property('type', 'list');
         });
-        xit('(head (list 42 2 1))', () => {
+        it('(head (list 42 2 1))', () => {
             let result = lisp.eval('(head (list 42 2 1))')[0];
             expect(result).to.have.deep.property('lexeme', 42);
         });
-        xit('(head (tail (list 5 4 3 2 1)))', () => {
-            let result = lisp.eval('(head (tail (list 5 4 3 2 1)))');
+        it('(head (tail (list 5 4 3 2 1)))', () => {
+            let result = lisp.eval('(head (tail (list 5 4 3 2 1)))')[0];
             expect(result).to.have.property('lexeme', 4)
-        });
-        xit('((fn (n) (print n)) 42)', () => {
-            let result = lisp.eval('((fn (n) (print n)) 42)')[0];
-            expect(result).to.have.property('type', 'list');
-        });  
-        xit('((fn (x y) (add x y)) 5 8))', () => {
-            let result = lisp.eval('((fn (x y) (add x y)) 5 8))')[0];
-            expect(result).to.have.property('lexeme', 13);
-        });      
+        });    
     });
 });

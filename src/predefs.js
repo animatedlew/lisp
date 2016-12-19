@@ -79,15 +79,19 @@ module.exports = {
     floor: n => n[0] | 0,
     ceil: n => n[0] | 0 + 1,
     print(args, ctx) {
-        let argc = args.length;
-        if (argc > 1) console.log(`>>  ${'(' + colors.yellow(args.map(t => t.lexeme).join(' ')) + ')'}`);
-        else if (argc == 1) {
-            let lookup = ctx.find(args[0].lexeme).lexeme;
-            if (Array.isArray(args[0]) && !args[0].length) console.log(`>> ${colors.yellow('()')}`);
-            else if (args[0].type == 'symbol' && lookup) console.log(`>> ${colors.yellow(lookup)}`);
-            else if (args[0].type == 'function') console.log(`>> ${colors.yellow('function')}`);
-            else if (args[0].type == 'list') console.log(`>> ${colors.yellow(args[0].lexeme.map(t => t.lexeme).join(', '))}`);
-            else console.log(`>> ${colors.yellow(args[0].lexeme)}`);
+        if (!global.NOPRINT) {
+            let argc = args.length;
+            if (argc > 1) console.log(`>>  ${'(' + colors.yellow(args.map(t => t.lexeme).join('')) + ')'}`);
+            else if (argc == 1) {
+                let lookup = ctx.find(args[0].lexeme).lexeme;
+                if (Array.isArray(args[0])) {
+                    if (!args[0].length) console.log(`>> ${colors.yellow('()')}`);
+                    else if (args[0][0].lexeme == 'list')
+                        console.log(`>> (${colors.yellow(args[0].slice(1).map(t => t.lexeme).join(' '))})`);
+                } else if (args[0].type == 'symbol' && lookup) console.log(`>> ${colors.yellow(lookup)}`);
+                else if (args[0].type == 'function') console.log(`>> ${colors.yellow('function')}`);
+                else console.log(`>> ${colors.yellow(args[0].lexeme)}`);
+            }
         }
         return new Token('list', []);
     }
