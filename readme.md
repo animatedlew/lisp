@@ -6,8 +6,14 @@ An experimental LISP REPL.
 
 Node v6.x, built on Node v7.x.
 
+####How do I install it locally?
+Type `npm install`.
+
 ###How do I run it?
-Type `npm start` or `node repl` on the command line.
+Type `npm start`.
+
+####How do I run tests?
+Type `npm test`.
 
 ###Features
  * All [sexprs](https://en.wikipedia.org/wiki/S-expression) return a value
@@ -25,25 +31,26 @@ Type `npm start` or `node repl` on the command line.
 
 ###What does it do?
 
-~~At the moment, it simply tokenizes your input and generates an AST. In a future version, I will be adding basic functions such as: +, -, /, *, %, min, max, head, and tail.~~
+The REPL can detect several atom types and even evaluate `if`, `def`, and `fn` forms. In addition to `add`, `mult`, `and`, `or`, and others, I added a `print` function that will pretty print based on type.
 
-The REPL can detect several atom types and even evaluate `if-exprs`. In addition to `add`, `mult`, `and`, `or`, and others, I added a `print` function that takes either a string or list of strings, or objects with a `toString()`, to be printed.
-
-To use an `if-expr`, use the following syntax rules:
+To use an `if` form, use the following syntax rules:
 
 ```lisp
 (if cond ifTrue ifFalse)
 ```
 The interpreter will complain if you do not provide enough, or too many, branches. The `cond` term can be any nested `s-expression` that evaluates to a `bool`.
 
-To use `print-expr`, use the following rules:
+To use `print` function, use the following rules:
 
 ```lisp
 (print 1)
 ```
+
 The `print` function can also handle multiple arguments and the empty list.
 
 ###Examples
+Here are some examples but see `test/evalSpec.js` for more examples.
+
 ```lisp
 (def sum (fn (a b)
          (add a b)))
@@ -76,7 +83,9 @@ The `print` function can also handle multiple arguments and the empty list.
 ```
 
 ###TODO
- * unit tests
+ * add above examples as unit tests
+ * pass tail of evaluated nodes to head
+ * ~~unit tests~~
  * eval
  * apply
  * append
@@ -88,13 +97,13 @@ The `print` function can also handle multiple arguments and the empty list.
  * floor
  * ceil
  * symbol?
-    - function?
-    - equality?
-    - nil?
-    - empty?
-    - number?
-    - string?
-    - list?
+ * function?
+ * equality?
+ * nil?
+ * empty?
+ * number?
+ * string?
+ * list?
  * add [JSON](http://www.json.org/) string escape chars
  * add the concept of nil == ()
  * variables
@@ -122,8 +131,9 @@ The `print` function can also handle multiple arguments and the empty list.
  ####Forms
  - vars on scope chain: `foo` -> `value`
  - atoms eval to themselves
- - if-forms: `(if cond isTrue isFalse)`
+ - `if` forms: `(if cond isTrue isFalse)`
  - definition: `(def foo 42)`
  - function application: `(sum x y)`
  - functions: `(fn params body)`
+   - named functions: `(def foo (fn (n) (print n)))`
 
