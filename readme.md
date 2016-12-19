@@ -2,17 +2,17 @@
 
 An experimental LISP REPL.
 
-####Requirements
+###Requirements
 
 Node v6.x, built on Node v7.x.
 
-####How do I install it locally?
+###How do I install it locally?
 Type `npm install`.
 
 ###How do I run it?
 Type `npm start`.
 
-####How do I run tests?
+###How do I run tests?
 Type `npm test`.
 
 ###Features
