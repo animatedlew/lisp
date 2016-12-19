@@ -11,11 +11,11 @@ describe('Lisp', () => {
             let result = lisp.eval('(add 2 3)')[0];
             expect(result).to.have.deep.eq(new Token('number', 5));
         });
-        xit('((fn (n) (print n)) 42)', () => {
+        it('((fn (n) (print n)) 42)', () => {
             let result = lisp.eval('((fn (n) (print n)) 42)')[0];
             expect(result).to.have.property('type', 'list');
         });
-        xit('((fn (x y) (add x y)) 5 8))', () => {
+        it('((fn (x y) (add x y)) 5 8))', () => {
             let result = lisp.eval('((fn (x y) (add x y)) 5 8))')[0];
             expect(result).to.have.property('lexeme', 13);
         });

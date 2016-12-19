@@ -10,9 +10,14 @@ module.exports = function interpret(ast, ctx) {
     const forms = require('./forms');
     const atom = ast[0];
 
-    if (Array.isArray(atom) && atom.length)
-        return interpret(atom, ctx);
-    else {
+    if (Array.isArray(atom) && atom.length) {
+        let t = interpret(atom, ctx);
+        if (t.type == 'function') {
+            let fn = t.lexeme;
+            return fn.block.call(fn, ast.slice(1));
+        }
+        return t;
+    } else {
         switch (atom.type) {
             case "list":
                 return ast;
