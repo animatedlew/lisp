@@ -18,11 +18,11 @@ let forms = {
         let [cond, ifTrue, ifFalse] = args;
         return interpret([cond], ctx).lexeme ? interpret([ifTrue], ctx) : interpret([ifFalse || new Token('list', [])], ctx);
     },
-    list(args) {
+    list(args, ctx) {
         let argc = args.length;
-        let atomc = args.filter(atom => !Array.isArray(atom)).length;
-        assert(argc == atomc, 'IllegalArgument: list function only accepts atoms. Form: (list 1 2 3)');
-        return new Token('list', args);
+        let atoms = args.map(atom => interpret([atom], ctx));
+        assert(atoms.every(t => !Array.isArray(t)), 'IllegalArgument: list function only accepts atoms. Form: (list 1 2 3)');
+        return new Token('list', atoms);
     },
     def(args, ctx) {
         let argc = args.length;
