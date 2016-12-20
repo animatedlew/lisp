@@ -46,9 +46,10 @@ class Lisp {
     }
   }
   static print(result) {
-    if (Array.isArray(result))
-      console.log(`>> (${result.map(t => colors.yellow(t.lexeme.length ? t.lexeme : 'nil')).join(' ')})`);
-    else if (result instanceof Token) {
+    if (Array.isArray(result)) {
+      if (result.length) Lisp.print(result[0]);
+      else console.log(colors.yellow('nil'));
+    } else if (result instanceof Token) {
       switch (result.type) {
         case 'list':
           console.log(`>> ${colors.yellow(`(${result.lexeme.map(t => t.lexeme).join(' ')})`)}`);
