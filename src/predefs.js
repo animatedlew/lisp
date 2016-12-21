@@ -73,11 +73,24 @@ module.exports = {
         assert(arg.type == 'list', '#head only operates on non-emtpy lists.');
         return new Token('list', arg.lexeme.slice(1));
     },
-    // TODO: return token
-    min : (a, b) => a <= b ? a : b,
-    max: (a, b) => a >= b ? a : b,
-    floor: n => n[0] | 0,
-    ceil: n => n[0] | 0 + 1,
+    min(args, ctx) {
+        let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
+        assert(a.type == b.type, "#min requires arguments to be of same type.");
+        return a.lexeme <= b.lexeme ? a : b;
+    },
+    max(args, ctx) {
+        let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
+        assert(a.type == b.type, "#max requires arguments to be of same type.");
+        return a.lexeme >= b.lexeme ? a : b;
+    },
+    floor(args, ctx) {
+        let arg = args[0];
+        return new Token("number", interpret([arg], ctx).lexeme | 0);
+    },
+    ceil(args, ctx) {
+        let arg = args[0];
+        return new Token("number", interpret([arg], ctx).lexeme | 0 + 1);
+    },
     print(args, ctx) {
         if (!global.NOPRINT) {
             let argc = args.length;
