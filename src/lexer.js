@@ -64,7 +64,7 @@ class Lexer {
     }
     isNumber(c) { return /[0-9]/.test(c); }
     isLetter(c) { return /[a-zA-Z]/.test(c); }
-    isSymbol(c) { return /[\+\-\*\/<>=%!]/.test(c); }
+    isSymbol(c) { return /[\+\-\*\/<>=%!|]/.test(c); }
     isAlpha(c) { return this.isNumber(c) || this.isAlpha(c); }
     get tokens() {
         while (this.p < this.input.length) {
