@@ -25,7 +25,7 @@
         (or x y)))
 
 (def fib (fn (n)
-         (if (or (= n 0) (= n 1))
-         n
-         (+ (- (fib n) 1) (- (fib n) 2))
+         (if (or (eq n 0) (eq n 1))
+         (n)
+         (add (sub (fib n) 1) (sub (fib n) 2))
 )))
