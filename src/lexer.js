@@ -63,8 +63,8 @@ class Lexer {
         return buffer;
     }
     isNumber(c) { return /[0-9]/.test(c); }
-    isNumberPrefix(c) { return /[+-.]/.test(c); }
     isLetter(c) { return /[a-zA-Z]/.test(c); }
+    isSymbol(c) { return /[\+\-\*\/<>=%!]/.test(c); }
     isAlpha(c) { return this.isNumber(c) || this.isAlpha(c); }
     get tokens() {
         while (this.p < this.input.length) {
@@ -85,8 +85,8 @@ class Lexer {
                     this.match(c);
                     break;
                 default:
-                    if (this.isNumber(c) || this.isNumberPrefix(c)) this.digits();
-                    else if (this.isLetter(c)) this.symbol();
+                    if (this.isNumber(c)) this.digits();
+                    else if (this.isLetter(c) || this.isSymbol(c)) this.symbol();
                     else throw new Error(`Try again. Character '${c}' is illegal.`);
                     break;
             }

@@ -10,20 +10,25 @@ module.exports = {
         return new Token('number', a.lexeme + b.lexeme);
     },
     sub(args, ctx) {
-        let [a, b] = [args[0], args[1]];
-        return new Token('number', +interpret([a], ctx).lexeme - +interpret([b], ctx).lexeme);
+        let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
+        assert(a.type == 'number' && b.type == 'number', '#sub: arguments must evaluate to numbers!');
+        return new Token('number', a.lexeme - b.lexeme);
     },
     mod(args, ctx) {
-        let [a, b] = [args[0], args[1]];
-        return new Token("number", +interpret([a], ctx).lexeme % +interpret([b], ctx).lexeme);
+        let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
+        assert(a.type == 'number' && b.type == 'number', '#mod: arguments must evaluate to numbers!');
+        return new Token("number", a.lexeme % b.lexeme);
     },
     mult(args, ctx) {
-        let [a, b] = [args[0], args[1]];
-        return new Token("number", +interpret([a], ctx).lexeme * +interpret([b], ctx).lexeme);
+        let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
+        assert(a.type == 'number' && b.type == 'number', '#mult: arguments must evaluate to numbers!');
+        return new Token("number", a.lexeme * b.lexeme);
     },
     div(args, ctx) {
-        let [a, b] = [args[0], args[1]];
-        return new Token("number", +interpret([a], ctx).lexeme / +interpret([b], ctx).lexeme);
+        let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
+        assert(a.type == 'number' && b.type == 'number', '#div: arguments must evaluate to numbers!');
+        assert(b.lexeme, "#div: Divide-by-zero error!");
+        return new Token("number", a.lexeme / b.lexeme);
     },
     neg(args, ctx) {
         let arg = args[0];

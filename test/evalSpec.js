@@ -1,12 +1,14 @@
 const expect = require('chai').expect;
 const Lisp = require('../src/lisp');
 const Token = require('../src/token');
+const path = require('path');
+const fs = require('fs');
 
 global.NOPRINT = true;
 const lisp = new Lisp();
 
 describe('Lisp', () => {
-    describe('#eval', () => {
+    describe('syntax', () => {
         it('(add 2 3)', () => {
             let result = lisp.eval('(add 2 3)')[0];
             expect(result).to.have.deep.eq(new Token('number', 5));
@@ -52,4 +54,35 @@ describe('Lisp', () => {
             expect(result.lexeme.map(t => t.lexeme)).to.have.same.members([1, 2, 7, 5, 13]);
         });
     });
+    describe('predefs', () => {
+        before(() => {
+            let core = fs.readFileSync(path.join('src', 'core.lisp'), { encoding: 'utf-8' });
+            lisp.eval(core);
+        });
+        it('add', () => {
+            let r35 = lisp.eval('(+ 10 25)');
+            let r300 = lisp.eval('(+ 100 200)');
+            expect(r35).to.have.deep.property('[0].lexeme', 35);
+            expect(r300).to.have.deep.property('[0].lexeme', 300);
+            expect(lisp.eval.bind(null, '(+ 1 "fail")')).to.throw
+        });
+        it('sub', () => {
+            let r75 = lisp.eval('(- 100 25)');
+            let r15 = lisp.eval('(- 10 25)');
+            let r100 = lisp.eval('(- 100 200)');
+            expect(r75).to.have.deep.property('[0].lexeme', 75);
+            expect(r15).to.have.deep.property('[0].lexeme', -15);
+            expect(r100).to.have.deep.property('[0].lexeme', -100);
+            expect(lisp.eval.bind(null, '(- 1 "fail")')).to.throw
+        });
+        it('div', () => {
+            let r4 = lisp.eval('(div 100 25)');            
+            let r0 = lisp.eval('(div 0 200)');
+            expect(r4).to.have.deep.property('[0].lexeme', 4);
+            expect(lisp.eval.bind(null, '(div 10 0)')).to.throw;
+            expect(r0).to.have.deep.property('[0].lexeme', 0);
+            expect(lisp.eval.bind(null, '(div 1 "fail")')).to.throw
+        });
+    });
+    
 });

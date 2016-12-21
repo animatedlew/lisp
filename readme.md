@@ -83,19 +83,21 @@ Here are some examples but see `test/evalSpec.js` for more examples.
 ```
 
 ###TODO
+ * ~~add core library~~
  * add above examples as unit tests
- * pass tail of evaluated nodes to head
+ * ~~pass tail of evaluated nodes to head~~
  * ~~unit tests~~
+ * add negative numbers to recognizer
  * eval
  * apply
  * append
  * len
  * map
  * filter
- * min
- * max
- * floor
- * ceil
+ * ~~min~~
+ * ~~max~~
+ * ~~floor~~
+ * ~~ceil~~
  * symbol?
  * function?
  * equality?
@@ -105,7 +107,7 @@ Here are some examples but see `test/evalSpec.js` for more examples.
  * string?
  * list?
  * add [JSON](http://www.json.org/) string escape chars
- * add the concept of nil == ()
+ * ~~add the concept of nil == ()~~
  * variables
   - (let (x 5) (y 2)) ; local ctx
   - ~~(def x 5) ; global ctx~~
@@ -122,7 +124,7 @@ Here are some examples but see `test/evalSpec.js` for more examples.
   - for hex numbers like `#xF2D5`
   - for binary numbers like `#b101001010`
  * add `;` comments
- * accept internal symbols `/\+|\-|\/|\*|\%|\!|\:/`
+ * ~~accept internal symbols `/\+|\-|\/|\*|\%|\!/`~~
  * add ability to read in a source file
  * ~~add list keyword~~
  * ~~predefs~~
