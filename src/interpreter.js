@@ -34,7 +34,9 @@ module.exports = function interpret(ast, ctx) {
                 if (predef) return predef(ast.slice(1), ctx);
                 else {
                     let fn = atom.lexeme;
-                    return fn.block.call(fn, ast.slice(1), ctx);
+                    let args = ast.slice(1).map(arg => interpret([arg], ctx));
+                    // console.log("@@", args);
+                    return fn.block.call(fn, args, ctx);
                 }
             }
             case 'symbol':
@@ -44,7 +46,7 @@ module.exports = function interpret(ast, ctx) {
                 }
                 return lookup || atom;
             default:
-                //console.log(`${atom.type.toUpperCase()}: ${atom.lexeme}`);
+                // console.log(`${atom.type.toUpperCase()}: ${atom.lexeme}`);
                 return atom;
         }
     };

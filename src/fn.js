@@ -1,6 +1,7 @@
 const interpret = require('./interpreter');
 const assert = require('assert');
 const Context = require('./context');
+const colors = require('./colors');
 
 class Fn {
     constructor(ctx, params, body) {
@@ -21,9 +22,10 @@ class Fn {
         // console.log("args", '(' + args.map(t => t.lexeme).join(', ') + ')');
         assert(argc == requiredArgc, `Arity error! Please provide ${requiredArgc} argument${requiredArgc != 1 ? 's' : ''}.`);
         this.bind(args);
-        //console.log("local ctx: ", this.ctx);
+        // console.log("local ctx: ", colors.red(this.ctx.find('n').lexeme));
         return interpret(this.body.lexeme, this.ctx);
     }
+    toString() { return "fn"; }
 }
 
 module.exports = Fn;

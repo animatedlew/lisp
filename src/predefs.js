@@ -4,6 +4,10 @@ const Token = require('./token');
 const assert = require('assert');
 
 module.exports = {
+    eval(args, ctx) {
+        assert(args.length > 0, '#eval: must have at least one argument!');
+        return args.slice(1).reduce((b, a) => interpret([a], ctx), interpret([args[0]], ctx));
+    },
     add(args, ctx) {
         let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
         assert(a.type == 'number' && b.type == 'number', '#add: arguments must evaluate to numbers!');
@@ -43,24 +47,24 @@ module.exports = {
         return new Token("bool", interpret([a], ctx).lexeme < interpret([b], ctx).lexeme);
     },
     lte(args, ctx) {
-        let [a, b] = [args[0], args[1]];
-        return new Token("bool", interpret([a], ctx).lexeme <= interpret([b], ctx).lexeme);
+        let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
+        return new Token("bool", a.lexeme <= b.lexeme);
     },
     gt(args, ctx) {
-        let [a, b] = [args[0], args[1]];
-        return new Token("bool", interpret([a], ctx).lexeme > interpret([b], ctx).lexeme);
+        let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
+        return new Token("bool", a.lexeme > b.lexeme);
     },
     gte(args, ctx) {
-        let [a, b] = [args[0], args[1]];
-        return new Token("bool", interpret([a], ctx).lexeme >= interpret([b], ctx).lexeme);
+        let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
+        return new Token("bool", a.lexeme >= b.lexeme);
     },
     and(args, ctx) {
-        let [a, b] = [args[0], args[1]];
-        return new Token("bool", interpret([a], ctx).lexeme && interpret([b], ctx).lexeme);
+        let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
+        return new Token("bool", a.lexeme && b.lexeme);
     },
     or(args, ctx) {
-        let [a, b] = [args[0], args[1]];
-        return new Token("bool", interpret([a], ctx).lexeme || interpret([b], ctx).lexeme);
+        let [a, b] = [interpret([args[0]], ctx), interpret([args[1]], ctx)];
+        return new Token("bool", a.lexeme || b.lexeme);
     },
     not(args, ctx) {
         let arg = args[0];

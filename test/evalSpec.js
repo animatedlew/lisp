@@ -84,5 +84,31 @@ describe('Lisp', () => {
             expect(lisp.eval.bind(null, '(div 1 "fail")')).to.throw
         });
     });
+    describe('#fib', () => {
+        it('0 -> 0', () => {
+            expect(lisp.eval('(fib 0)')).to.have.deep.property('[0].lexeme', 0);
+        });
+        it('1 -> 1', () => {
+            expect(lisp.eval('(fib 1)')).to.have.deep.property('[0].lexeme', 1);
+        });
+        it('2 -> 1', () => {
+            expect(lisp.eval('(fib 2)')).to.have.deep.property('[0].lexeme', 1);
+        });
+        it('6 -> 8', () => {
+            expect(lisp.eval('(fib 6)')).to.have.deep.property('[0].lexeme', 8);
+        });
+        it('7 -> 13', () => {
+            expect(lisp.eval('(fib 7)')).to.have.deep.property('[0].lexeme', 13);
+        });
+        it('8 -> 21', () => {
+            expect(lisp.eval('(fib 8)')).to.have.deep.property('[0].lexeme', 21);
+        });
+        it('10 -> 55', () => {
+            expect(lisp.eval('(fib 10)')).to.have.deep.property('[0].lexeme', 55);
+        });
+        it('12 -> 144', () => {
+            expect(lisp.eval('(fib 12)')).to.have.deep.property('[0].lexeme', 144);
+        });
+    });
     
 });

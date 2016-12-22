@@ -25,7 +25,9 @@
         (or x y)))
 
 (def fib (fn (n)
-         (if (or (eq n 0) (eq n 1))
-         (n)
-         (add (fib (sub n 1)) (fib (sub n 2)))
-)))
+  (eval
+    (def _fib (fn (n a b)
+      (if (gt n 0) (_fib (sub n 1) b (add a b)) (a))))
+    (_fib n 0 1))
+))
+
