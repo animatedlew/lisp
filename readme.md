@@ -31,7 +31,7 @@ Type `npm test`.
 
 ###What does it do?
 
-The REPL can detect several atom types and even evaluate `if`, `def`, and `fn` forms. In addition to `add`, `mult`, `and`, `or`, and others, I added a `print` function that will pretty print based on type.
+The REPL can detect several atom types and even evaluate `if`, `def`, `do`, and `fn` forms. In addition to `add`, `mult`, `and`, `or`, and others, I added a `print` function that will pretty print based on type.
 
 To use an `if` form, use the following syntax rules:
 
@@ -47,6 +47,15 @@ To use `print` function, use the following rules:
 ```
 
 The `print` function can also handle multiple arguments and the empty list.
+
+ ####Forms
+ - vars on scope chain: `foo` -> `value`
+ - atoms eval to themselves
+ - `if` forms: `(if cond isTrue isFalse)`
+ - definition: `(def foo 42)`
+ - function application: `(sum x y)`
+ - functions: `(fn params body)`
+   - named functions: `(def foo (fn (n) (print n)))`
 
 ###Examples
 Here are some examples but see `test/evalSpec.js` for more examples.
@@ -83,10 +92,8 @@ Here are some examples but see `test/evalSpec.js` for more examples.
 ```
 
 ###TODO
- * ~~add core library~~
+ * add ability to read in a source file
  * add above examples as unit tests
- * ~~pass tail of evaluated nodes to head~~
- * ~~unit tests~~
  * add negative numbers to recognizer
  * eval
  * apply
@@ -94,10 +101,6 @@ Here are some examples but see `test/evalSpec.js` for more examples.
  * len
  * map
  * filter
- * ~~min~~
- * ~~max~~
- * ~~floor~~
- * ~~ceil~~
  * symbol?
  * function?
  * equality?
@@ -112,10 +115,6 @@ Here are some examples but see `test/evalSpec.js` for more examples.
   - (let (x 5) (y 2)) ; local ctx
   - ~~(def x 5) ; global ctx~~
   - ~~add def lookup in interpreter~~
- * ~~custom functions~~
- * ~~contexts~~
-  - ~~local~~
-  - ~~global~~
  * add quote, quasiquote, and unquote
  * implement `cons` to make lists truly `sexprs`
   - e.g. `(eq (cons x '(y)) (list x y)) ; (x . y)`
@@ -123,19 +122,19 @@ Here are some examples but see `test/evalSpec.js` for more examples.
  * add language extensions with `#`
   - for hex numbers like `#xF2D5`
   - for binary numbers like `#b101001010`
- * add `;` comments
+ * ~~custom functions~~
+ * ~~contexts~~
+  - ~~local~~
+  - ~~global~~  
  * ~~accept internal symbols `/\+|\-|\/|\*|\%|\!/`~~
- * add ability to read in a source file
  * ~~add list keyword~~
  * ~~predefs~~
  * ~~forms~~
-
- ####Forms
- - vars on scope chain: `foo` -> `value`
- - atoms eval to themselves
- - `if` forms: `(if cond isTrue isFalse)`
- - definition: `(def foo 42)`
- - function application: `(sum x y)`
- - functions: `(fn params body)`
-   - named functions: `(def foo (fn (n) (print n)))`
-
+ * ~~min~~
+ * ~~max~~
+ * ~~floor~~
+ * ~~ceil~~
+ * ~~pass tail of evaluated nodes to head~~
+ * ~~unit tests~~
+ * ~~add core library~~
+ * ~~add `;` comments~~

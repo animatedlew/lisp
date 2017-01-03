@@ -24,10 +24,10 @@
 (def || (fn (x y)
         (or x y)))
 
+;; fibonacci
 (def fib (fn (n)
-  (eval
+  (do
     (def _fib (fn (n a b)
       (if (gt n 0) (_fib (sub n 1) b (add a b)) (a))))
     (_fib n 0 1))
 ))
-

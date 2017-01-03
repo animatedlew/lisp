@@ -4,7 +4,7 @@ const Token = require('./token');
 const assert = require('assert');
 
 module.exports = {
-    eval(args, ctx) {
+    do(args, ctx) {
         assert(args.length > 0, '#eval: must have at least one argument!');
         return args.slice(1).reduce((b, a) => interpret([a], ctx), interpret([args[0]], ctx));
     },
@@ -68,7 +68,7 @@ module.exports = {
     },
     not(args, ctx) {
         let arg = args[0];
-        return new Token("bool", !interpret([arg], ctx).lexeme);                        
+        return new Token("bool", !interpret([arg], ctx).lexeme);
     },
     head(args, ctx) {
         assert(args && args.length == 1, '#head require a list as an argument.');

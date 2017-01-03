@@ -19,6 +19,9 @@ class Parser {
     while (this.t.length) {
       let token = this.getCurrentToken();
       switch (token.type) {
+        case 'comment':
+          this.consume();
+          break;
         case 'function':
         case 'form':
         case 'symbol':

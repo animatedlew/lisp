@@ -62,6 +62,16 @@ class Lexer {
         }
         return buffer;
     }
+    comment() {
+      let buffer = '';
+      let c = this.input[this.p];
+      while (!/\r?\n/.test(c)) {
+        buffer += c;
+        c = this.input[++this.p];
+      }
+      if (buffer) this.t.push(new Token('comment', buffer));
+      return buffer;
+    }
     isNumber(c) { return /[0-9]/.test(c); }
     isLetter(c) { return /[a-zA-Z]/.test(c); }
     isSymbol(c) { return /[\+\-\*\/<>=%!|_]/.test(c); }
@@ -70,6 +80,10 @@ class Lexer {
         while (this.p < this.input.length) {
             let c = this.input[this.p];
             switch (c) {
+                case ';':
+                    this.match(c);
+                    this.comment();
+                    break;
                 case '\n':
                     this.row++;
                     this.col = 0;
