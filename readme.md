@@ -1,21 +1,21 @@
-###What is it?
+### What is it?
 
 An experimental LISP REPL.
 
-###Requirements
+### Requirements
 
 Node v6.x, built on Node v7.x.
 
-###How do I install it locally?
+### How do I install it locally?
 Type `npm install`.
 
-###How do I run it?
+### How do I run it?
 Type `npm start`.
 
-###How do I run tests?
+### How do I run tests?
 Type `npm test`.
 
-###Features
+### Features
  * All [sexprs](https://en.wikipedia.org/wiki/S-expression) return a value
  * Support for many global roots
  * Atoms
@@ -29,7 +29,7 @@ Type `npm test`.
    - single quoted strings
    - double quoted strings
 
-###What does it do?
+### What does it do?
 
 The REPL can detect several atom types and even evaluate `if`, `def`, `do`, and `fn` forms. In addition to `add`, `mult`, `and`, `or`, and others, I added a `print` function that will pretty print based on type.
 
@@ -48,7 +48,7 @@ To use `print` function, use the following rules:
 
 The `print` function can also handle multiple arguments and the empty list.
 
- ####Forms
+ #### Forms
  - vars on scope chain: `foo` -> `value`
  - atoms eval to themselves
  - `if` forms: `(if cond isTrue isFalse)`
@@ -57,7 +57,7 @@ The `print` function can also handle multiple arguments and the empty list.
  - functions: `(fn params body)`
    - named functions: `(def foo (fn (n) (print n)))`
 
-###Examples
+### Examples
 Here are some examples but see `test/evalSpec.js` for more examples.
 
 ```lisp
@@ -91,7 +91,7 @@ Here are some examples but see `test/evalSpec.js` for more examples.
 ; 10
 ```
 
-###TODO
+### TODO
  * add ability to read in a source file
  * add above examples as unit tests
  * add negative numbers to recognizer
